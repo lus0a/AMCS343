@@ -1,0 +1,45 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\geometry{a4paper,scale=0.85}
+
+\title{Fast Solvers for Large Systems of Equations}
+\author{Shuai Lu 170742}
+\date{Homework 6}
+
+\begin{document}
+\maketitle
+\noindent \textbf{Exercise 6.1} Exercise 5.1 Use the script convdiff.lua to solve the convection-diffusion problem
+$$
+u_{t}+\nabla \cdot(\mathbf{v} u)-\nabla \cdot(\epsilon \nabla u)=0, \quad x \in(0,1)^{2}
+$$
+with Dirichlet boundary conditions and a "hill" as the initial condition. The velocity $\mathbf{v}$ rotates the hill around the center. Discretization: FV, full-unwind method for the convection term, implicit Euler method for the time derivative.\\
+
+\noindent (a) [2 point] Compute the 40 time steps with the linear iteration preconditioned with the GMG method (Jacobi smoothing) on grid refinement levels 5,6 and 7 (option -numRefs). Compare the maximum value of $u$ after the last time step for these grids. How can you explain the difference? Does the numerical solution converge to the analytic one if only the spacial grid is refined?\\
+
+\noindent Solution:\\
+\noindent The maximum value of $u$ after the last time step are 0.64, 0.685 and 0.71 for grid level 5, 6 and 7 respectively. The results are more precise with the increase of grid level. Not only the spacial grid but also the time step size should be refined if we want to make the numerical solution converging to the analytic one.\\
+
+\noindent (b) [1 point] How does the convergence rate of the linear solver vary when the grid is refined.\\
+
+\noindent Solution:\\
+\noindent The convergence rate of the linear solver vary from 0.16 to 0.35 when the grid level from 5 to 7.\\
+
+\noindent (c) [1 point] Replace the linear iteration with the conjugate gradient method. Try it on the grid refinement level 5 . What do you observe? Why?\\
+
+\noindent Solution:\\
+\noindent There is a error message. Since this problem is unsymmetric, we can not use conjugate gradient method.\\
+
+\noindent (d) [2 point] Set BiCGStab (bicgstab) as the linear solver instead of the linear iteration. Test it on the grid refinement level 7 . What can you say about its convergence in the time steps?\\
+
+\noindent Solution:\\
+\noindent But there is some very bad convergence rate in iterations of some time steps. But they are good for most of the iterations.\\
+
+\noindent \textbf{Exercise 6.2} [2 points] Use the script ns.lua to solve the Navier-Stokes equation in a $2 \mathrm{~d}$ domain with a hole. The problem is non-linear, and the linear solver is used to solved the linearized problems in the non-linear iterations. Try two settings for the relative reduction in the linear solver: $10^{-10}$ and $10^{-5}$. Report the numbers of the steps of the non-linear method in both the cases.\\
+
+\noindent Solution:\\
+\noindent The numbers of convergence steps are 22 and 11 for the relative reduction are $10^{-10}$ and $10^{-5}$ respectively.\\
+
+\end{document}.
